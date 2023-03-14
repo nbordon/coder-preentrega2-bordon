@@ -34,6 +34,20 @@ class Clase {
             alert('No se cargaron Alumnos al sistema')
         }
     }
+
+    mostrarNota(nombre){
+        const alumno = this.alumnos.filter((al) => al.nombre.includes(nombre))
+        if(alumno.length > 0) {
+            let lista = ""
+            for(const al of alumno) {
+                 lista += "Nombre: " + al.nombre + " - Nota: " + al.nota + '\n'
+            }
+
+            alert(lista)
+        } else {
+            alert('No se cargaron Alumnos al sistema')
+        }
+    }
 }
 
 class Alumno {
@@ -43,14 +57,16 @@ class Alumno {
     }
 }
 
+let clase = new Clase();
 
 function menu() {
     opcion = parseInt(prompt(`Bienvenido al sistema de simulador de promedios de notas
     Ingrese una opcion:
     1) Ingresar nuevo Alumno
     2) Mostrar los alumnos de la clase
-    3) Calcular el promedio de la clase
-    4) Salir
+    3) Ver notas de un alumno
+    4) Calcular el promedio de la clase
+    5) Salir
     `))
 
     return opcion
@@ -74,9 +90,16 @@ function cargarAlumno(clase) {
     clase.agregarAlumno(alumno);
 }
 
+function mostrarNotaDe() {
+    let nombre = prompt("Ingrese el nombre del alumno");
+    while(nombre ===""){
+        nombre = prompt("Debe ingresar el nombre del alumno");
+    }
+    clase.mostrarNota(nombre)
+}
+
 function simulador() {
     let opcion = 0;
-    let clase = new Clase();
 
     do{
         opcion = menu()
@@ -88,16 +111,19 @@ function simulador() {
                 clase.listarAlumnos()
                 break;
             case 3:
-                clase.calcularPromedio()
+                mostrarNotaDe()
                 break;
             case 4:
+                clase.calcularPromedio()
+                break;
+            case 5:
                 alert('Saliendo del sistema...')
                 break;
             default:
                 alert('Opcion no valida')
                 break;
         }
-    } while(opcion !== 4)
+    } while(opcion !== 5)
 }
 
 simulador()
